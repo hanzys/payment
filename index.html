@@ -1,0 +1,702 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08040f">
+<meta name="description" content="SPOOKPAY Halloween Super Flow — QRIS Veronix, DANA dan GoPay Kyzoxd.">
+<title>SPOOKPAY — Halloween Super Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800;900&family=Creepster&display=swap" rel="stylesheet">
+
+<style>
+:root{
+ --bg:#08040f;--orange:#ff7900;--gold:#ffb52e;
+ --purple:#bd35ff;--pink:#ff43c6;--white:#fbf7ff;
+ --muted:#aaa1bb;--line:rgba(255,255,255,.1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{
+ min-height:100vh;overflow-x:hidden;color:var(--white);
+ font-family:Inter,Arial,sans-serif;
+ background:
+ radial-gradient(ellipse at 5% 12%,#ff680025,transparent 32%),
+ radial-gradient(ellipse at 95% 32%,#9225ff30,transparent 38%),
+ radial-gradient(ellipse at 50% 90%,#fa287f10,transparent 40%),var(--bg);
+}
+body.loading{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible{outline:2px solid #ffad35;outline-offset:4px}
+::selection{background:#a92dff;color:#fff}
+.container{width:min(1100px,calc(100% - 32px));margin:auto}
+
+/* CINEMATIC BACKGROUND */
+#particles{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.bg-effects{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.moon{
+ position:absolute;top:11%;right:8%;width:clamp(110px,18vw,220px);
+ aspect-ratio:1;border-radius:50%;
+ background:radial-gradient(circle at 35% 30%,#ffce92,#ff773e 55%,#c52d42);
+ box-shadow:0 0 35px #ff4b3b55,0 0 110px #fa29452a;
+ opacity:.75;
+}
+.moon:after{
+ content:"";position:absolute;inset:0;border-radius:50%;
+ background:radial-gradient(circle at 70% 25%,#7b1d4522 0 8%,transparent 9%),
+ radial-gradient(circle at 30% 70%,#7b1d4525 0 12%,transparent 13%),
+ radial-gradient(circle at 65% 65%,#7b1d4525 0 7%,transparent 8%);
+}
+.castle{
+ position:absolute;right:-2%;top:24%;font-size:clamp(90px,20vw,220px);
+ opacity:.14;filter:drop-shadow(0 0 30px #a72bff);
+}
+.fog{
+ position:absolute;width:80vw;height:180px;left:-20%;bottom:8%;
+ background:linear-gradient(90deg,transparent,#a33cff14,#ff761515,transparent);
+ filter:blur(35px);border-radius:50%;
+ animation:fogMove 18s ease-in-out infinite alternate;
+}
+.fog.two{left:35%;bottom:36%;animation-delay:-8s;opacity:.65}
+.noise{
+ position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.08;
+ background-image:radial-gradient(#fff .5px,transparent .5px);
+ background-size:7px 7px;
+}
+main,header,footer{position:relative;z-index:1}
+
+/* LOADER */
+#loader{
+ position:fixed;inset:0;z-index:200;display:grid;place-items:center;
+ background:#08040f;transition:opacity .65s,visibility .65s;
+}
+#loader.done{opacity:0;visibility:hidden;pointer-events:none}
+.loader-content{text-align:center}
+.loader-pumpkin{font-size:65px;animation:float 1.6s ease-in-out infinite}
+.loader-title{font:900 20px Orbitron,sans-serif;margin:17px 0 8px}
+.loader-caption{font-size:10px;letter-spacing:3px;color:var(--muted)}
+.loader-track{width:180px;height:3px;background:#ffffff12;border-radius:9px;margin:23px auto;overflow:hidden}
+.loader-bar{height:100%;width:0;background:linear-gradient(90deg,var(--orange),var(--purple));animation:loadBar 1.1s ease forwards}
+
+/* NAVIGATION */
+header{
+ position:sticky;top:0;z-index:50;
+ background:#08040fd9;border-bottom:1px solid var(--line);
+ backdrop-filter:blur(20px);
+}
+.nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.logo{display:flex;align-items:center;gap:8px;font:900 19px Orbitron,sans-serif;letter-spacing:-1px}
+.logo-icon{font-size:28px;filter:drop-shadow(0 0 12px var(--orange))}
+.gradient-text{
+ background:linear-gradient(100deg,#ffca4d,#ff7900 43%,#ef43ff 85%);
+ -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.navlinks{display:flex;gap:25px;color:#c7bfd4;font-size:12px}
+.navlinks a:hover{color:var(--gold)}
+.secure-pill{
+ padding:10px 13px;border:1px solid #ff9b384d;border-radius:100px;
+ color:#ffbd65;font-size:10px;font-weight:800;letter-spacing:1px;
+}
+
+/* HERO */
+.hero{text-align:center;padding:65px 0 32px}
+.eyebrow{
+ display:inline-flex;align-items:center;gap:8px;
+ padding:9px 15px;border:1px solid #ff8b324d;border-radius:100px;
+ background:#ff710010;color:#ffba68;font-size:10px;font-weight:800;letter-spacing:2px;
+}
+.pulse-dot{width:7px;height:7px;background:var(--orange);border-radius:50%;box-shadow:0 0 13px var(--orange);animation:pulse 1.4s infinite}
+h1{font:900 clamp(42px,8vw,80px)/1.1 Orbitron,sans-serif;letter-spacing:-3px;margin:23px 0 8px}
+.hero-art{
+ font:clamp(45px,8vw,80px)/1.1 Creepster,cursive;
+ background:linear-gradient(95deg,#ffb52e,#ff5b09 40%,#f044ff 80%,#9947ff);
+ -webkit-background-clip:text;background-clip:text;color:transparent;
+ filter:drop-shadow(0 0 20px #b32bff30);
+ transform:rotate(-1deg);
+}
+.hero p{max-width:550px;margin:22px auto 0;color:var(--muted);font-size:13px;line-height:1.9}
+.hero-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:25px}
+
+/* BUTTONS */
+.btn{
+ display:inline-flex;align-items:center;justify-content:center;gap:8px;
+ border:0;border-radius:13px;padding:13px 18px;font-size:11px;font-weight:800;
+ transition:transform .25s,box-shadow .25s,filter .25s;
+}
+.btn:hover{transform:translateY(-3px);filter:brightness(1.12)}
+.btn:active{transform:scale(.97)}
+.btn-primary{
+ color:white;background:linear-gradient(105deg,#ff9c16,#ff6900 43%,#a51fff);
+ box-shadow:0 8px 28px #ff650026;
+}
+.btn-secondary{color:#eee3ff;background:#ffffff08;border:1px solid var(--line)}
+.btn-cyan{color:white;background:linear-gradient(100deg,#00bfc9,#3778ff,#c13dff)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.section-heading{text-align:center;margin:43px 0 23px}
+.section-heading small{font-size:10px;color:#ffad3e;letter-spacing:3px;font-weight:800}
+.section-heading h2{font:700 clamp(21px,4vw,30px) Orbitron,sans-serif;margin-top:11px}
+.section-heading p{font-size:12px;color:var(--muted);margin-top:9px;line-height:1.8}
+
+/* GLASS PAYMENT CARD */
+.payment-main{
+ position:relative;isolation:isolate;overflow:hidden;border:1px solid transparent;border-radius:26px;
+ background:linear-gradient(145deg,#160d23eF,#08060ff5 72%) padding-box,
+ linear-gradient(120deg,#ff9c19,#ff6500 28%,#a82aff 65%,#f64be0) border-box;
+ box-shadow:0 0 50px #9b1fff19,0 20px 60px #0006;
+}
+.payment-main:before{
+ content:"";position:absolute;z-index:-1;inset:-60%;
+ background:conic-gradient(from 0deg,transparent,#ff7b001c,transparent,#bb2bff25,transparent);
+ animation:rotate 18s linear infinite;
+}
+.main-inner{padding:clamp(19px,4vw,36px)}
+.main-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:26px}
+.provider{display:flex;align-items:center;gap:13px}
+.provider-logo{
+ width:52px;height:52px;display:grid;place-items:center;border-radius:15px;
+ background:linear-gradient(135deg,#ff920e,#b328ff);
+ font:900 20px Orbitron,sans-serif;box-shadow:0 0 25px #9d27ff38;
+}
+.provider h3{font:700 clamp(16px,3vw,23px) Orbitron,sans-serif;letter-spacing:1px}
+.provider p{font-size:10px;color:var(--muted);margin-top:5px}
+.badge{padding:9px 12px;border:1px solid #ff8b324d;border-radius:100px;background:#ff8b3212;color:#ffb34e;font-size:9px;font-weight:800;letter-spacing:1px}
+.main-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:30px;align-items:center}
+.qr-frame{
+ max-width:340px;width:100%;margin:auto;padding:9px;border-radius:19px;
+ background:linear-gradient(140deg,#ff9915,#be2bff);
+ box-shadow:0 0 35px #c32cff25;animation:qrGlow 4s ease-in-out infinite;
+}
+.qr-white{padding:12px;border-radius:12px;background:white}
+.qr-white img{display:block;width:100%;aspect-ratio:1;object-fit:contain;background:white;border-radius:5px}
+.qr-caption{text-align:center;color:#4a3d5a;font-size:10px;font-weight:800;margin-top:9px;letter-spacing:1px}
+.qr-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:13px}
+.qr-buttons .btn{padding:12px 5px;font-size:9px}
+.details h4{font:700 18px/1.7 Orbitron,sans-serif;margin-bottom:7px}
+.details>p{font-size:12px;color:var(--muted);line-height:1.8;margin-bottom:17px}
+.feature{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+.feature:last-of-type{border-bottom:0}
+.feature-icon{flex-shrink:0;width:35px;height:35px;display:grid;place-items:center;border-radius:12px;background:#ff8d1715;border:1px solid #ff951f32}
+.feature b{display:block;font-size:12px;margin-bottom:4px}
+.feature span{font-size:11px;color:var(--muted);line-height:1.6}
+.full-btn{width:100%;margin-top:17px}
+
+/* WALLETS */
+.secondary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.wallet{
+ position:relative;overflow:hidden;border-radius:22px;padding:23px;
+ background:linear-gradient(145deg,#11162df2,#090812f5);
+ border:1px solid #5e71ff99;box-shadow:0 15px 35px #0003;transition:.3s;
+ backdrop-filter:blur(12px);
+}
+.wallet:hover{transform:translateY(-5px);box-shadow:0 15px 40px #773cff25}
+.wallet.gopay{border-color:#00d4e199}
+.wallet:after{
+ content:"";position:absolute;top:-70px;right:-80px;width:180px;height:180px;
+ border-radius:50%;background:#5e3cff;filter:blur(85px);opacity:.23;pointer-events:none;
+}
+.wallet.gopay:after{background:#00d4e1}
+.wallet-top{display:flex;align-items:center;gap:13px;position:relative;z-index:1}
+.wallet-icon{width:51px;height:51px;display:grid;place-items:center;border-radius:16px;background:#126bdf;font-size:23px;font-weight:900}
+.gopay .wallet-icon{background:#06a8c9}
+.wallet-name{font:900 19px Orbitron,sans-serif}
+.wallet-sub{color:var(--muted);font-size:11px;margin-top:5px}
+.owner-label{color:#ffae45;font-size:10px;font-weight:800;letter-spacing:1.5px;margin-top:21px}
+.number-box{position:relative;z-index:1;margin-top:11px;padding:15px;border:1px solid #ffffff20;background:#0004;border-radius:15px}
+.number-label{color:var(--muted);font-size:10px}
+.number-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px}
+.number{font:800 clamp(13px,2vw,18px) Orbitron,sans-serif;letter-spacing:-.5px;overflow-wrap:anywhere}
+.copy-icon{flex-shrink:0;width:36px;height:36px;border:1px solid #a44dff7a;border-radius:10px;background:#9c2dff17;color:#e7baff;transition:.2s}
+.copy-icon:hover{background:#9c2dff40}
+.wallet .btn{width:100%;margin-top:13px;padding:12px;font-size:10px}
+.wallet-bottom{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:16px;font-size:10px;color:#c5bfd3}
+.wallet-bottom span{display:flex;gap:5px;align-items:center}
+
+/* TUTORIAL / FOOTER */
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px;padding:19px;border:1px solid var(--line);border-radius:20px;background:#0c0814b8}
+.trust{text-align:center;padding:7px 4px}
+.trust-icon{font-size:21px;margin-bottom:10px}
+.trust b{font-size:11px;display:block}
+.trust p{font-size:10px;color:var(--muted);line-height:1.6;margin-top:6px}
+.warning{display:flex;align-items:flex-start;gap:12px;margin:24px 0 45px;padding:16px;border:1px solid #ff9b2030;border-radius:15px;background:#ff8d0c08;color:#e7d3b6;font-size:11px;line-height:1.8}
+.warning strong{color:#ffb34d}
+footer{border-top:1px solid var(--line);background:#07040cf2;padding:25px 0}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.footer-copy{font-size:10px;color:var(--muted);line-height:1.8}
+.footer-right{font-size:11px;color:#ff9b39}
+
+/* SMART COPY TOAST */
+.toast{
+ position:fixed;left:50%;bottom:25px;z-index:250;
+ transform:translate(-50%,25px);opacity:0;pointer-events:none;
+ padding:13px 20px;border:1px solid #ff972b66;border-radius:14px;
+ background:#171020;box-shadow:0 10px 40px #0009;color:white;
+ font-size:12px;font-weight:700;transition:.3s;
+ width:max-content;max-width:calc(100% - 30px);text-align:center;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* QRIS VIEWER PRO */
+.modal{
+ display:none;position:fixed;inset:0;z-index:150;padding:15px;
+ align-items:center;justify-content:center;background:#030107ed;backdrop-filter:blur(15px);
+}
+.modal.show{display:flex;animation:modalIn .25s ease}
+.modal-box{
+ width:min(480px,100%);max-height:94dvh;overflow:auto;padding:21px;
+ text-align:center;border:1px solid #b33bff80;border-radius:22px;
+ background:linear-gradient(145deg,#170e25,#090610);
+ box-shadow:0 0 60px #9e21ff25;
+}
+.modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px;text-align:left}
+.modal-head h3{font:700 17px Orbitron,sans-serif}
+.close-x{width:35px;height:35px;border:1px solid var(--line);border-radius:10px;background:#ffffff08;color:white;font-size:18px}
+.modal-desc{font-size:11px;color:var(--muted);line-height:1.7;text-align:left}
+.viewer-image-wrap{
+ margin-top:16px;padding:10px;border-radius:15px;background:white;overflow:auto;
+ max-height:57dvh;touch-action:pan-x pan-y;
+}
+#viewerImage{display:block;width:100%;height:auto;max-height:none;transform-origin:center;transition:transform .2s}
+.viewer-controls{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:12px}
+.viewer-controls .btn{padding:11px 3px;font-size:10px}
+.viewer-note{font-size:10px;color:var(--muted);line-height:1.7;margin-top:12px}
+.modal-close{display:block;margin:15px auto 0;color:#aaa1bb;background:none;border:0;font-size:12px}
+
+/* MOTION */
+@keyframes pulse{50%{opacity:.35;transform:scale(.75)}}
+@keyframes rotate{to{transform:rotate(360deg)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes fogMove{from{transform:translateX(-10%) scale(1)}to{transform:translateX(25%) scale(1.2)}}
+@keyframes loadBar{to{width:100%}}
+@keyframes qrGlow{0%,100%{box-shadow:0 0 25px #c32cff22}50%{box-shadow:0 0 40px #ff8b3c45}}
+@keyframes modalIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.reveal{animation:reveal .7s both}
+@keyframes reveal{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:760px){
+ .nav{min-height:65px}.navlinks{gap:12px;font-size:10px}.secure-pill{display:none}.logo{font-size:16px}
+ .hero{padding-top:48px}.main-grid{grid-template-columns:1fr;gap:26px}
+ .qr-frame{max-width:290px}.details h4,.details>p{text-align:center}
+ .secondary-grid{gap:12px}.wallet{padding:16px}.wallet-top{gap:9px}
+ .wallet-icon{width:43px;height:43px}.wallet-name{font-size:14px}
+ .trust-grid{grid-template-columns:repeat(2,1fr)}
+ .moon{top:15%;right:-7%}
+}
+@media(max-width:430px){
+ .container{width:calc(100% - 24px)}
+ .navlinks{gap:9px}.navlinks a{font-size:10px}
+ .logo{font-size:13px;gap:4px}.logo-icon{font-size:21px}
+ h1{letter-spacing:-2px}.hero-art{letter-spacing:-1px}
+ .secondary-grid{grid-template-columns:1fr}
+ .wallet{padding:19px}.wallet-name{font-size:18px}
+ .number{font-size:17px}.main-inner{padding:18px}
+ .main-head{align-items:flex-start}.badge{font-size:8px}
+ .footer-inner{justify-content:center;text-align:center}
+ .viewer-controls{grid-template-columns:repeat(2,1fr)}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body class="loading">
+
+<!-- LOADING INTRO -->
+<div id="loader" role="status" aria-label="Memuat SPOOKPAY">
+ <div class="loader-content">
+  <div class="loader-pumpkin">🎃</div>
+  <div class="loader-title"><span class="gradient-text">SPOOKPAY</span></div>
+  <div class="loader-caption">ENTER THE DARK SIDE</div>
+  <div class="loader-track"><div class="loader-bar"></div></div>
+ </div>
+</div>
+
+<!-- CINEMATIC EFFECTS -->
+<div class="bg-effects" aria-hidden="true">
+ <div class="moon"></div>
+ <div class="castle">🏰</div>
+ <div class="fog"></div>
+ <div class="fog two"></div>
+</div>
+<div class="noise" aria-hidden="true"></div>
+<canvas id="particles" aria-hidden="true"></canvas>
+
+<header>
+ <div class="container nav">
+  <a class="logo" href="#home" aria-label="SPOOKPAY Home">
+   <span class="logo-icon">🎃</span><span class="gradient-text">SPOOKPAY</span>
+  </a>
+  <nav class="navlinks" aria-label="Navigasi">
+   <a href="#home">Home</a><a href="#payment">Payment</a><a href="#tutorial">Tutorial</a>
+  </nav>
+  <a class="secure-pill" href="#payment">♢ SECURE PAYMENT</a>
+ </div>
+</header>
+
+<main class="container">
+ <section class="hero" id="home">
+  <div class="eyebrow"><span class="pulse-dot"></span> HALLOWEEN PAYMENT CENTER</div>
+  <h1>PAYMENT</h1>
+  <div class="hero-art">AFTER DARK</div>
+  <p>Selamat datang di dunia pembayaran Halloween. Pilih metode pembayaran favoritmu dengan tampilan premium, praktis, dan nyaman di semua perangkat.</p>
+  <div class="hero-actions">
+   <a class="btn btn-primary" href="#payment">🎃 PILIH PAYMENT ↗</a>
+   <a class="btn btn-secondary" href="#tutorial">ⓘ CARA PEMBAYARAN</a>
+  </div>
+ </section>
+
+ <section id="payment">
+  <div class="section-heading">
+   <small>✦ PILIH METODE ✦</small>
+   <h2>Payment <span class="gradient-text">Gateway</span></h2>
+   <p>Pilih metode pembayaran sesuai kebutuhanmu.</p>
+  </div>
+
+  <!-- MAIN PAYMENT: VERONIX QRIS -->
+  <article class="payment-main reveal">
+   <div class="main-inner">
+    <div class="main-head">
+     <div class="provider">
+      <div class="provider-logo">V</div>
+      <div><h3>VERONIX <span class="gradient-text">QRIS</span></h3><p>QRIS Payment · Payment Utama</p></div>
+     </div>
+     <span class="badge">✦ MAIN PAYMENT</span>
+    </div>
+
+    <div class="main-grid">
+     <div>
+      <div class="qr-frame">
+       <div class="qr-white">
+        <img id="qrisImage" src="https://files.catbox.moe/tcxzp1.jpg" alt="QRIS pembayaran Veronix">
+        <div class="qr-caption">SCAN QRIS · VERONIX</div>
+       </div>
+      </div>
+      <div class="qr-buttons">
+       <button class="btn btn-primary" id="openQR">⌕ QRIS VIEWER PRO</button>
+       <button class="btn btn-secondary" id="copyQRLink">▣ SALIN LINK QRIS</button>
+      </div>
+     </div>
+
+     <div class="details">
+      <h4>One Scan.<br><span class="gradient-text">One Transaction.</span></h4>
+      <p>Gunakan aplikasi pembayaran yang mendukung QRIS. Periksa nama penerima dan nominal sebelum mengonfirmasi transaksi.</p>
+      <div class="feature"><div class="feature-icon">▦</div><div><b>Scan QRIS</b><span>Pindai QR menggunakan aplikasi pembayaran yang mendukung QRIS.</span></div></div>
+      <div class="feature"><div class="feature-icon">⚡</div><div><b>Praktis dan Mudah</b><span>Buka QRIS dalam tampilan besar atau unduh gambarnya.</span></div></div>
+      <div class="feature"><div class="feature-icon">♢</div><div><b>Periksa Penerima</b><span>Pastikan identitas penerima sesuai sebelum memasukkan PIN.</span></div></div>
+      <button class="btn btn-primary full-btn" id="scanButton">▦ BUKA QRIS SEKARANG ↗</button>
+     </div>
+    </div>
+   </div>
+  </article>
+
+  <div class="section-heading">
+   <small>✦ ALTERNATIVE PAYMENT ✦</small>
+   <h2>Digital <span class="gradient-text">Wallets</span></h2>
+   <p>Metode pembayaran alternatif milik Kyzoxd.</p>
+  </div>
+
+  <div class="secondary-grid">
+   <!-- DANA -->
+   <article class="wallet reveal">
+    <div class="wallet-top">
+     <div class="wallet-icon">D</div>
+     <div><div class="wallet-name">DANA</div><div class="wallet-sub">Digital Wallet</div></div>
+    </div>
+    <div class="owner-label">PAYMENT BY KYZOXD</div>
+    <div class="number-box">
+     <div class="number-label">Nomor DANA</div>
+     <div class="number-row">
+      <span class="number">082264176976</span>
+      <button class="copy-icon" data-copy="082264176976" data-name="DANA" aria-label="Salin nomor DANA">▣</button>
+     </div>
+     <button class="btn btn-primary" data-copy="082264176976" data-name="DANA">▣ SALIN NOMOR DANA</button>
+    </div>
+    <div class="wallet-bottom"><span>⚡ Praktis</span><span>♢ Periksa penerima</span><span>◷ Fleksibel</span></div>
+   </article>
+
+   <!-- GOPAY -->
+   <article class="wallet gopay reveal">
+    <div class="wallet-top">
+     <div class="wallet-icon">G</div>
+     <div><div class="wallet-name">GoPay</div><div class="wallet-sub">Digital Wallet</div></div>
+    </div>
+    <div class="owner-label">PAYMENT BY KYZOXD</div>
+    <div class="number-box">
+     <div class="number-label">Nomor GoPay</div>
+     <div class="number-row">
+      <span class="number">088989566141</span>
+      <button class="copy-icon" data-copy="088989566141" data-name="GoPay" aria-label="Salin nomor GoPay">▣</button>
+     </div>
+     <button class="btn btn-cyan" data-copy="088989566141" data-name="GoPay">▣ SALIN NOMOR GOPAY</button>
+    </div>
+    <div class="wallet-bottom"><span>⚡ Praktis</span><span>♢ Periksa penerima</span><span>◷ Fleksibel</span></div>
+   </article>
+  </div>
+ </section>
+
+ <section id="tutorial">
+  <div class="section-heading">
+   <small>✦ SIMPLE PAYMENT ✦</small>
+   <h2>How To <span class="gradient-text">Pay?</span></h2>
+   <p>Ikuti langkah berikut agar pembayaran berjalan dengan benar.</p>
+  </div>
+  <div class="trust-grid">
+   <div class="trust"><div class="trust-icon">🎃</div><b>01 · Pilih Metode</b><p>Pilih QRIS, DANA, atau GoPay.</p></div>
+   <div class="trust"><div class="trust-icon">▦</div><b>02 · Lakukan Transfer</b><p>Scan QRIS atau masukkan nomor tujuan.</p></div>
+   <div class="trust"><div class="trust-icon">✓</div><b>03 · Verifikasi</b><p>Periksa nama penerima dan nominal.</p></div>
+   <div class="trust"><div class="trust-icon">🧾</div><b>04 · Simpan Bukti</b><p>Simpan bukti pembayaranmu.</p></div>
+  </div>
+  <div class="warning">
+   <span style="font-size:20px">⚠️</span>
+   <div><strong>Perhatian sebelum membayar!</strong><br>
+   Pastikan nama penerima, nominal, dan metode pembayaran sudah benar. Jangan pernah membagikan PIN, kata sandi, atau OTP. Website ini tidak memverifikasi pembayaran secara otomatis.</div>
+  </div>
+ </section>
+</main>
+
+<footer>
+ <div class="container footer-inner">
+  <a href="#home" class="logo"><span class="logo-icon">🎃</span><span class="gradient-text">SPOOKPAY</span></a>
+  <div class="footer-copy">© <span id="year"></span> SpookPay Halloween Edition.<br>Made with 🧡 and a little bit of magic.</div>
+  <a class="footer-right" href="#home">TRICK OR TREAT ✦</a>
+ </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- QRIS VIEWER PRO -->
+<div class="modal" id="qrModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+ <div class="modal-box">
+  <div class="modal-head">
+   <h3 id="modalTitle"><span class="gradient-text">VERONIX QRIS</span></h3>
+   <button class="close-x" id="closeX" aria-label="Tutup viewer">×</button>
+  </div>
+  <p class="modal-desc">QRIS Viewer Pro · Perbesar gambar, reset zoom, salin link, atau unduh QRIS.</p>
+  <div class="viewer-image-wrap" id="viewerWrap">
+   <img id="viewerImage" src="https://files.catbox.moe/tcxzp1.jpg" alt="QRIS Veronix dalam tampilan besar">
+  </div>
+  <div class="viewer-controls">
+   <button class="btn btn-secondary" id="zoomOut" aria-label="Perkecil gambar">－ Zoom</button>
+   <button class="btn btn-secondary" id="zoomIn" aria-label="Perbesar gambar">＋ Zoom</button>
+   <button class="btn btn-secondary" id="resetZoom">↺ Reset</button>
+   <a class="btn btn-primary" href="https://files.catbox.moe/tcxzp1.jpg" download="QRIS-Veronix.jpg" target="_blank" rel="noopener noreferrer">↓ Unduh</a>
+  </div>
+  <p class="viewer-note">Jika unduhan tidak dimulai otomatis, gambar akan dibuka di tab baru. Kamu dapat menyimpannya melalui menu browser.</p>
+  <button class="btn btn-secondary" id="copyViewerLink" style="width:100%;margin-top:12px">▣ SALIN LINK GAMBAR QRIS</button>
+  <button class="modal-close" id="closeQR">Tutup viewer ✕</button>
+ </div>
+</div>
+
+<script>
+(() => {
+ "use strict";
+
+ const QR_URL = "https://files.catbox.moe/tcxzp1.jpg";
+ const toast = document.getElementById("toast");
+ let toastTimer;
+
+ function notify(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+ }
+
+ // SMART COPY: nomor wallet dan link QRIS
+ async function copyText(value, label) {
+  try {
+   if (navigator.clipboard && window.isSecureContext) {
+    await navigator.clipboard.writeText(value);
+   } else {
+    const input = document.createElement("textarea");
+    input.value = value;
+    input.setAttribute("readonly", "");
+    input.style.cssText = "position:fixed;left:-9999px;top:0;opacity:0";
+    document.body.appendChild(input);
+    input.select();
+    const success = document.execCommand("copy");
+    input.remove();
+    if (!success) throw new Error("Clipboard unavailable");
+   }
+   notify("✓ " + label + " berhasil disalin!");
+  } catch {
+   window.prompt("Salin teks berikut secara manual:", value);
+  }
+ }
+
+ document.querySelectorAll("[data-copy]").forEach(button => {
+  button.addEventListener("click", async () => {
+   const value = button.dataset.copy;
+   const label = button.dataset.name || "Nomor pembayaran";
+   const original = button.textContent;
+   await copyText(value, label);
+   if (button.classList.contains("copy-icon")) {
+    button.textContent = "✓";
+    button.style.background = "#16864a55";
+    button.style.borderColor = "#4ce79b";
+    setTimeout(() => {
+     button.textContent = original;
+     button.style.background = "";
+     button.style.borderColor = "";
+    }, 1500);
+   }
+  });
+ });
+
+ document.getElementById("copyQRLink").addEventListener("click", () => {
+  copyText(QR_URL, "Link QRIS");
+ });
+ document.getElementById("copyViewerLink").addEventListener("click", () => {
+  copyText(QR_URL, "Link QRIS");
+ });
+
+ // QRIS VIEWER PRO
+ const modal = document.getElementById("qrModal");
+ const viewerImage = document.getElementById("viewerImage");
+ const viewerWrap = document.getElementById("viewerWrap");
+ let zoom = 1;
+ let lastFocus = null;
+
+ function updateZoom() {
+  viewerImage.style.transform = `scale(${zoom})`;
+  viewerImage.style.cursor = zoom > 1 ? "zoom-out" : "zoom-in";
+  viewerWrap.style.overflow = zoom > 1 ? "auto" : "hidden";
+ }
+
+ function openModal() {
+  lastFocus = document.activeElement;
+  modal.classList.add("show");
+  document.body.style.overflow = "hidden";
+  zoom = 1;
+  updateZoom();
+  document.getElementById("closeX").focus();
+ }
+
+ function closeModal() {
+  modal.classList.remove("show");
+  document.body.style.overflow = "";
+  if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+ }
+
+ document.getElementById("openQR").addEventListener("click", openModal);
+ document.getElementById("scanButton").addEventListener("click", openModal);
+ document.getElementById("closeX").addEventListener("click", closeModal);
+ document.getElementById("closeQR").addEventListener("click", closeModal);
+
+ modal.addEventListener("click", event => {
+  if (event.target === modal) closeModal();
+ });
+
+ document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && modal.classList.contains("show")) closeModal();
+  if (!modal.classList.contains("show")) return;
+  if (event.key === "+" || event.key === "=") {
+   zoom = Math.min(zoom + .25, 3);
+   updateZoom();
+  }
+  if (event.key === "-") {
+   zoom = Math.max(zoom - .25, 1);
+   updateZoom();
+  }
+ });
+
+ document.getElementById("zoomIn").addEventListener("click", () => {
+  zoom = Math.min(zoom + .25, 3);
+  updateZoom();
+ });
+ document.getElementById("zoomOut").addEventListener("click", () => {
+  zoom = Math.max(zoom - .25, 1);
+  updateZoom();
+ });
+ document.getElementById("resetZoom").addEventListener("click", () => {
+  zoom = 1;
+  updateZoom();
+  viewerWrap.scrollTo({top:0,left:0,behavior:"smooth"});
+ });
+ viewerImage.addEventListener("click", () => {
+  zoom = zoom >= 2.5 ? 1 : zoom + .5;
+  updateZoom();
+ });
+
+ // LOADING INTRO
+ const loader = document.getElementById("loader");
+ function hideLoader() {
+  loader.classList.add("done");
+  document.body.classList.remove("loading");
+ }
+ window.addEventListener("load", () => setTimeout(hideLoader, 1050), {once:true});
+ setTimeout(hideLoader, 3000);
+
+ document.getElementById("year").textContent = new Date().getFullYear();
+
+ // PARTICLES / FLOATING EMBERS
+ const canvas = document.getElementById("particles");
+ const ctx = canvas.getContext("2d");
+ const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+ let particles = [];
+ let width = 0, height = 0, frame = 0;
+ let dpr = 1;
+
+ function resizeCanvas() {
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  width = window.innerWidth;
+  height = window.innerHeight;
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
+  canvas.style.width = width + "px";
+  canvas.style.height = height + "px";
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const count = Math.min(65, Math.max(22, Math.floor(width / 14)));
+  particles = Array.from({length:count}, () => ({
+   x:Math.random()*width,
+   y:Math.random()*height,
+   r:Math.random()*1.8+.4,
+   speed:Math.random()*.45+.12,
+   drift:(Math.random()-.5)*.3,
+   alpha:Math.random()*.5+.2,
+   hue:Math.random()>.5?28:280
+  }));
+ }
+
+ function drawParticles() {
+  ctx.clearRect(0,0,width,height);
+  particles.forEach(p => {
+   ctx.beginPath();
+   ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+   ctx.fillStyle=`hsla(${p.hue},100%,65%,${p.alpha})`;
+   ctx.shadowBlur=8;
+   ctx.shadowColor=p.hue===28?"#ff7900":"#bd35ff";
+   ctx.fill();
+   if (!reducedMotion) {
+    p.y-=p.speed;
+    p.x+=p.drift;
+    if (p.y < -5) {p.y=height+5;p.x=Math.random()*width;}
+    if (p.x < -5) p.x=width+5;
+    if (p.x > width+5) p.x=-5;
+   }
+  });
+  ctx.shadowBlur=0;
+  if (!reducedMotion) frame=requestAnimationFrame(drawParticles);
+ }
+
+ resizeCanvas();
+ drawParticles();
+ window.addEventListener("resize", () => {
+  cancelAnimationFrame(frame);
+  resizeCanvas();
+  drawParticles();
+ }, {passive:true});
+
+ // Fallback ketika QRIS gagal dimuat.
+ document.getElementById("qrisImage").addEventListener("error", () => {
+  notify("QRIS gagal dimuat. Coba buka link gambar secara langsung.");
+ });
+ viewerImage.addEventListener("error", () => {
+  notify("Gambar QRIS tidak tersedia. Periksa link gambar.");
+ });
+})();
+</script>
+</body>
+</html>
